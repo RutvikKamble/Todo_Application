@@ -1,0 +1,902 @@
+TodoApplication.java
+
+
+
+package com.example.TodoApplication;
+
+
+
+import org.springframework.boot.SpringApplication;
+
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+
+
+@SpringBootApplication
+
+public class TodoApplication {
+
+
+
+	public static void main(String[] args) {
+
+		SpringApplication.run(TodoApplication.class, args);
+
+	}
+
+
+
+}
+
+
+
+ProductController.java
+
+
+
+package com.example.TodoApplication.Controller;
+
+
+
+import com.example.TodoApplication.Model.Product;
+
+import com.example.TodoApplication.Service.ProductService;
+
+import org.springframework.web.bind.annotation.*;
+
+
+
+import java.util.List;
+
+
+
+@RestController
+
+@RequestMapping("/products")
+
+@CrossOrigin("*")
+
+public class ProductController {
+
+
+
+    private final ProductService service;
+
+
+
+    public ProductController(ProductService service) {
+
+        this.service = service;
+
+    }
+
+
+
+    @PostMapping
+
+    public Product addProduct(
+
+            @RequestBody Product product) {
+
+
+
+        return service.save(product);
+
+    }
+
+
+
+    @GetMapping
+
+    public List<Product> getAllProducts() {
+
+        return service.getAll();
+
+    }
+
+
+
+    @DeleteMapping("/{id}")
+
+    public void deleteProduct(
+
+            @PathVariable String id) {
+
+
+
+        service.delete(id);
+
+    }
+
+
+
+    @PutMapping
+
+    public Product updateProduct(
+
+            @RequestBody Product product) {
+
+
+
+        return service.update(product);
+
+    }
+
+}
+
+
+
+
+
+Product.java
+
+
+
+package com.example.TodoApplication.Model;
+
+
+
+import org.springframework.data.annotation.Id;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+
+
+
+@Document(collection = "products")
+
+public class Product {
+
+
+
+    @Id
+
+    private String id;
+
+
+
+    private String name;
+
+    private String desc;
+
+    private double price;
+
+
+
+    public Product() {}
+
+
+
+    public String getId() {
+
+        return id;
+
+    }
+
+
+
+    public void setId(String id) {
+
+        this.id = id;
+
+    }
+
+
+
+    public String getName() {
+
+        return name;
+
+    }
+
+
+
+    public void setName(String name) {
+
+        this.name = name;
+
+    }
+
+
+
+    public String getDesc() {
+
+        return desc;
+
+    }
+
+
+
+    public void setDesc(String desc) {
+
+        this.desc = desc;
+
+    }
+
+
+
+    public double getPrice() {
+
+        return price;
+
+    }
+
+
+
+    public void setPrice(double price) {
+
+        this.price = price;
+
+    }
+
+}
+
+
+
+ProductService.java
+
+
+
+package com.example.TodoApplication.Service;
+
+
+
+import com.example.TodoApplication.Model.Product;
+
+import com.example.TodoApplication.Repository.ProductRepository;
+
+import org.springframework.stereotype.Service;
+
+
+
+import java.util.List;
+
+
+
+@Service
+
+public class ProductService {
+
+
+
+    private final ProductRepository repository;
+
+
+
+    public ProductService(ProductRepository repository) {
+
+        this.repository = repository;
+
+    }
+
+
+
+    public Product save(Product product) {
+
+        return repository.save(product);
+
+    }
+
+
+
+    public List<Product> getAll() {
+
+        return repository.findAll();
+
+    }
+
+
+
+    public void delete(String id) {
+
+        repository.deleteById(id);
+
+    }
+
+
+
+    public Product update(Product product) {
+
+        return repository.save(product);
+
+    }
+
+}
+
+
+
+
+
+
+
+ProductRepository.java
+
+
+
+package com.example.TodoApplication.Repository;
+
+
+
+import com.example.TodoApplication.Model.Product;
+
+import com.example.TodoApplication.Repository.ProductRepository;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+
+
+public interface ProductRepository
+
+        extends MongoRepository<Product,String> {
+
+}
+
+
+
+ProductConfig.java
+
+
+
+package com.example.TodoApplication.Config;
+
+
+
+public class CrossConfig {
+
+}
+
+
+
+index.htms
+
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+
+    <link rel="stylesheet" href="CSS/style.css">
+
+</head>
+
+
+
+<body>
+
+    <div class="container">
+
+        <form action="/post" method = "POST">
+
+            <h2>Product</h2>
+
+            <label for="name">Product Name</label>
+
+            <input type="text" id="name" name="name">
+
+            <label for="desc">Description</label>
+
+            <input type="text" id="desc" name="desc">
+
+            <label for="price">Price</label>
+
+            <input type="number" id="price" name="price">
+
+
+
+            <!--
+
+            <label for="branch">Branch</label>
+
+            <select name="branch" id="branch">
+
+                <option value="cse">CSE</option>
+
+                <option value="ece">ECE</option>
+
+                <option value="mech">MECH</option>
+
+                <option value="civil">CIVIL</option>
+
+            </select>
+
+
+
+            <label for="password">Password</label>
+
+            <input type="password" id="password" name="password">
+
+
+
+
+
+            <button type="submit">Add Product</button>
+
+            -->
+
+            <button type="button" id="addBtn">
+
+                Add Product
+
+            </button>
+
+
+
+            <div id="product-list"></div>
+
+
+
+            <div class="btn-group">
+
+                <button class="delete-btn">Delete</button>
+
+                <button class="update-btn">Upadat</button>
+
+            </div>
+
+
+
+        </form>
+
+    </div>
+
+
+
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+style.css
+
+
+
+body{
+
+    background-color: #70a0d0;
+
+    font-family: Arial, sans-serif;
+
+}
+
+
+
+.container {
+
+    padding: 10px;
+
+    max-width: 500px;
+
+    margin: 100px auto;
+
+    background-color: #333;
+
+    color: #fff;
+
+    border-radius: 10px;
+
+    box-shadow: 0 0 10px #fff;
+
+}
+
+form{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 10px;
+
+}
+
+
+
+form label{
+
+    font-size: 15px;
+
+    margin-bottom: 10px;
+
+}
+
+
+
+form input{
+
+    padding: 8px;
+
+    border-radius: 10px;
+
+    border: none;
+
+    outline: none;
+
+}
+
+form select{
+
+    padding: 8px;
+
+    border-radius: 10px;
+
+}
+
+form button{
+
+    padding: 10px;
+
+    background-color: #3498db;
+
+    border: none;
+
+    border-radius: 10px;
+
+    margin-top: 10px;
+
+    font-size: 25px;
+
+    color: #fff;
+
+
+
+}
+
+
+
+.delete-btn {
+
+    width: 50px;
+
+    height: 30px;
+
+    font-size: 12px;
+
+}
+
+
+
+.delete-btn {
+
+    display: block;
+
+    margin-left: auto;  /* pushes button to left */
+
+}
+
+
+
+
+
+.update-btn {
+
+    width: 60px;
+
+    height: 30px;
+
+    font-size: 12px;
+
+}
+
+
+
+.btn-group {
+
+    display: flex;
+
+    justify-content: flex-end; /* move both to right */
+
+    gap: 10px; /* space between */
+
+}
+
+
+
+/* IMPORTANT: remove block + auto */
+
+.update-btn,
+
+.delete-btn {
+
+    display: inline-block; /* or just remove display completely */
+
+}
+
+
+
+#product-list{
+
+    margin-top:20px;
+
+}
+
+
+
+.card{
+
+    background:white;
+
+    color:black;
+
+    padding:10px;
+
+    border-radius:10px;
+
+    margin-top:10px;
+
+}
+
+
+
+
+
+script.js
+
+
+
+const api = "http://localhost:8080/products";
+
+
+
+let editId = null;
+
+
+
+document
+
+.getElementById("addBtn")
+
+.addEventListener("click", saveProduct);
+
+
+
+loadProducts();
+
+
+
+function saveProduct() {
+
+
+
+    const product = {
+
+
+
+        name:
+
+        document.getElementById("name").value,
+
+
+
+        desc:
+
+        document.getElementById("desc").value,
+
+
+
+        price:
+
+        document.getElementById("price").value
+
+    };
+
+
+
+    if(editId){
+
+
+
+        product.id = editId;
+
+
+
+        fetch(api,{
+
+            method:"PUT",
+
+            headers:{
+
+                "Content-Type":"application/json"
+
+            },
+
+            body:JSON.stringify(product)
+
+        })
+
+        .then(()=>{
+
+            editId=null;
+
+            loadProducts();
+
+        });
+
+
+
+    }else{
+
+
+
+        fetch(api,{
+
+            method:"POST",
+
+            headers:{
+
+                "Content-Type":"application/json"
+
+            },
+
+            body:JSON.stringify(product)
+
+        })
+
+        .then(()=>loadProducts());
+
+    }
+
+}
+
+
+
+function loadProducts(){
+
+
+
+    fetch(api)
+
+    .then(res=>res.json())
+
+    .then(data=>{
+
+
+
+        let html="";
+
+
+
+        data.forEach(product=>{
+
+
+
+            html += `
+
+            <div class="card">
+
+
+
+                <h3>${product.name}</h3>
+
+
+
+                <p>${product.desc}</p>
+
+
+
+                <p>₹${product.price}</p>
+
+
+
+                <button onclick="editProduct(
+
+                    '${product.id}',
+
+                    '${product.name}',
+
+                    '${product.desc}',
+
+                    '${product.price}'
+
+                )">
+
+                    Update
+
+                </button>
+
+
+
+                <button onclick=
+
+                "deleteProduct('${product.id}')">
+
+                    Delete
+
+                </button>
+
+
+
+            </div>
+
+            `;
+
+        });
+
+
+
+        document
+
+        .getElementById("product-list")
+
+        .innerHTML = html;
+
+    });
+
+}
+
+
+
+function deleteProduct(id){
+
+
+
+    fetch(`${api}/${id}`,{
+
+        method:"DELETE"
+
+    })
+
+    .then(()=>loadProducts());
+
+}
+
+
+
+function editProduct(
+
+    id,
+
+    name,
+
+    desc,
+
+    price
+
+){
+
+
+
+    editId=id;
+
+
+
+    document
+
+    .getElementById("name")
+
+    .value=name;
+
+
+
+    document
+
+    .getElementById("desc")
+
+    .value=desc;
+
+
+
+    document
+
+    .getElementById("price")
+
+    .value=price;
+
+}
+
+
+

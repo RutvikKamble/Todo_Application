@@ -1,0 +1,134 @@
+body{
+    background-color: #70a0d0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    padding: 10px;
+    max-width: 500px;
+    margin: 100px auto;
+    background-color: #333;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #fff;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+}
+
+form label{
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+form input{
+    padding: 8px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+form select{
+    padding: 8px;
+    border-radius: 10px;
+}
+form button{
+    padding: 10px;
+    background-color: #3498db;
+    border: none;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-size: 25px;
+    color: #fff;
+
+}
+
+.delete-btn {
+    width: 50px;
+    height: 30px;
+    font-size: 12px;
+}
+
+.delete-btn {
+    display: block;
+    margin-left: auto;  /* pushes button to left */
+}
+
+.update-btn {
+    width: 60px;
+    height: 30px;
+    font-size: 12px;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: flex-end; /* move both to right */
+    gap: 10px; /* space between */
+}
+
+/* IMPORTANT: remove block + auto */
+.update-btn,
+.delete-btn {
+    display: inline-block; /* or just remove display completely */
+}
+
+#product-list{
+    margin-top:20px;
+}
+
+.card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 90%;              /* 50% size */
+    margin: 10px auto;       /* center horizontally */
+
+    background: white;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.card-left {
+    font-size: 80%;   /* reduce text size */
+}
+
+.card-right {
+    display: flex;
+    flex-direction: column;  /* vertical buttons */
+    gap: 5px;
+}
+
+.update-btn,
+.delete-btn {
+    width: 70px;
+    height: 30px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.cart-box{
+    display:none;
+    margin-top:20px;
+    background:white;
+    color:black;
+    padding:15px;
+    border-radius:10px;
+}
+
+.cart-btn{
+    width:100px;
+    height:40px;
+    font-size:16px;
+    padding:0;
+}
+
+.form-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
