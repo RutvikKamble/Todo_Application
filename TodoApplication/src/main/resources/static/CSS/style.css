@@ -132,3 +132,11 @@ form button{
     align-items:center;
     margin-bottom:20px;
 }
+
+#cart-items .card {
+    margin: 1px auto;
+}
+
+#cart-items .card {
+    margin: 0;
+}

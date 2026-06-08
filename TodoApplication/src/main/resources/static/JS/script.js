@@ -118,7 +118,7 @@ function loadProducts(){
                         Update
                     </button>
 
-                    <button type="button" class="delete-btn" onclick="deleteProduct('${id}')">
+                    <button type="button" class="delete-btn" onclick="confirmDelete('${id}')">
                         Delete
                     </button>
                 </div>
@@ -271,3 +271,14 @@ function toggleCart(){
     }
 }
 
+function confirmDelete(id)
+{
+    const confirmAction = confirm(
+        "Are you sure you want to delete this product?"
+    );
+
+    if(confirmAction)
+    {
+        deleteProduct(id);
+    }
+}
