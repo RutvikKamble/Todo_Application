@@ -22,13 +22,6 @@
             </div>
 
 
-
-            <div id="cart-box" class="cart-box">
-                <h3>Cart</h3>
-
-                <div id="cart-items"></div>
-            </div>
-
             <label for="name">Product Name</label>
             <input type="text" id="name" name="name">
             <label for="desc">Description</label>
@@ -42,17 +35,24 @@
                 Add Product
             </button>
 
-            <!-- Cart Box -->
+
+
             <div id="cart-box" class="cart-box">
-                <h2>Cart</h2>
+
+                <div class="cart-header">
+                    <h2>Cart</h2>
+
+                    <button type="button" class="remove-all-btn">
+                        Remove All
+                    </button>
+                </div>
+
                 <div id="cart-items"></div>
+
             </div>
 
-            <!-- Products -->
             <div id="product-list"></div>
 
-
-            <div id="product-list"></div>
 
         </form>
     </div>

@@ -133,10 +133,28 @@ form button{
     margin-bottom:20px;
 }
 
+
 #cart-items .card {
     margin: 1px auto;
 }
 
 #cart-items .card {
     margin: 0;
+}
+
+.cart-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.remove-all-btn{
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 15px;
+    font-size: 14px;
+    cursor: pointer;
 }
